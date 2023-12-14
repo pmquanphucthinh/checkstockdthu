@@ -1,0 +1,31 @@
+name: Telegram Notification
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Chạy mỗi giờ vào phút 0
+
+jobs:
+  send-telegram-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Python Script
+        run: python .github/scripts/send_telegram_notification.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          API_URL: "https://taphoammo.net/api/getStock"
+          API_PARAMS: "kioskToken=YXRH1M4QFDT0IRYOSFSQ&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
