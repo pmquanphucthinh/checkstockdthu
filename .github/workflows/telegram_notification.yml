@@ -2,7 +2,7 @@ name: Telegram Notification
 
 on:
   schedule:
-    - cron: '0 * * * *' # Chạy mỗi giờ vào phút 0
+    - cron: '* * * * *' # Chạy mỗi phút
 
 jobs:
   send-telegram-notification:
