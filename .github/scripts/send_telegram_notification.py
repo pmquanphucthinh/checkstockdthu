@@ -1,5 +1,4 @@
 import requests
-import json
 import os
 import subprocess
 
@@ -13,19 +12,23 @@ def send_telegram_message(bot_token, chat_id, message):
     response = requests.post(api_url, data=params)
     return response.json()
 
-def update_readme(stock):
-    with open('README.md', 'r') as f:
-        readme_content = f.read()
+def create_github_release(tag_name, body):
+    github_token = os.getenv('GITHUB_TOKEN')
+    repo_owner = os.getenv('GITHUB_REPOSITORY_OWNER')
+    repo_name = os.getenv('GITHUB_REPOSITORY_NAME')
 
-    new_content = readme_content.replace('Stock: N/A', f'Stock: {stock}')
+    url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/releases'
+    headers = {
+        'Authorization': f'token {github_token}',
+        'Accept': 'application/vnd.github.v3+json'
+    }
+    payload = {
+        'tag_name': tag_name,
+        'body': body
+    }
 
-    with open('README.md', 'w') as f:
-        f.write(new_content)
-
-    # Git commit và push
-    subprocess.run(['git', 'add', 'README.md'])
-    subprocess.run(['git', 'commit', '-m', 'Update stock in README.md'])
-    subprocess.run(['git', 'push'])
+    response = requests.post(url, headers=headers, json=payload)
+    return response.json()
 
 def main():
     api_url = os.getenv('API_URL')
@@ -44,8 +47,10 @@ def main():
     message = f"Gittechvn - Kho hàng: {stock}"
     send_telegram_message(telegram_bot_token, telegram_chat_id, message)
 
-    # Cập nhật thông tin vào README.md và thực hiện commit
-    update_readme(stock)
+    # Tạo GitHub release
+    tag_name = f'v{stock}'
+    body = f"Gittechvn - Kho hàng: {stock}"
+    create_github_release(tag_name, body)
 
 if __name__ == "__main__":
     main()
