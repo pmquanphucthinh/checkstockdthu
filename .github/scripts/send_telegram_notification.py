@@ -55,7 +55,7 @@ def main():
     stock_2 = data_2.get('stock', 'N/A')
 
     # Gửi dữ liệu về Telegram
-    message = f"Gittechvn        - Kho hàng: {stock_1}\nShopgithubgiare - Kho hàng: {stock_2}"
+    message = f"Còn {stock_1} tài khoản shop Gittechvn\nCòn {stock_2} tài khoản shop Shopgithubgiare"
     send_telegram_message(telegram_bot_token, telegram_chat_id, message)
 
     # Tạo GitHub release
