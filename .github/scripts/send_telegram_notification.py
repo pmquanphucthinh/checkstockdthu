@@ -31,25 +31,36 @@ def create_github_release(tag_name, body):
     return response.json()
 
 def main():
-    api_url = os.getenv('API_URL')
-    api_params = os.getenv('API_PARAMS')
+    # API cho kho hàng 1
+    api_url_1 = "https://taphoammo.net/api/getStock"
+    api_params_1 = "kioskToken=3NCKIZQWT6TQ6C5T1E8G&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
+
+    # API cho kho hàng 2
+    api_url_2 = "https://taphoammo.net/api/getStock"
+    api_params_2 = "kioskToken=YXRH1M4QFDT0IRYOSFSQ&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
+
     telegram_bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
     telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
 
-    # Gửi request đến API
-    response = requests.get(f'{api_url}?{api_params}')
-    data = response.json()
+    # Gửi request đến API cho kho hàng 1
+    response_1 = requests.get(f'{api_url_1}?{api_params_1}')
+    data_1 = response_1.json()
 
-    # Trích xuất giá trị stock
-    stock = data.get('stock', 'N/A')
+    # Gửi request đến API cho kho hàng 2
+    response_2 = requests.get(f'{api_url_2}?{api_params_2}')
+    data_2 = response_2.json()
+
+    # Trích xuất giá trị stock từ cả hai kho hàng
+    stock_1 = data_1.get('stock', 'N/A')
+    stock_2 = data_2.get('stock', 'N/A')
 
     # Gửi dữ liệu về Telegram
-    message = f"Gittechvn - Kho hàng: {stock}"
+    message = f"Gittechvn - Kho hàng 1: {stock_1}\nShopgithubgiare - Kho hàng 2: {stock_2}"
     send_telegram_message(telegram_bot_token, telegram_chat_id, message)
 
     # Tạo GitHub release
-    tag_name = f'v{stock}'
-    body = f"Gittechvn - Kho hàng: {stock}"
+    tag_name = f'v{stock_1}_{stock_2}'
+    body = f"Gittechvn - Kho hàng 1: {stock_1}\nShopgithubgiare - Kho hàng 2: {stock_2}"
     create_github_release(tag_name, body)
 
 if __name__ == "__main__":
