@@ -33,5 +33,5 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           API_URL: "https://taphoammo.net/api/getStock"
-          API_PARAMS: "kioskToken=YXRH1M4QFDT0IRYOSFSQ&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
+          API_PARAMS: "kioskToken=AV9A5OO31JFJ4JNPFSEG&userToken=JRAF00P3Y74813G0CJSMAWTGHU6P01OJQJ4F"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
