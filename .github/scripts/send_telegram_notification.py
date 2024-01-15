@@ -33,11 +33,11 @@ def create_github_release(tag_name, body):
 def main():
     # API cho kho hàng 1
     api_url_1 = "https://taphoammo.net/api/getStock"
-    api_params_1 = "kioskToken=3NCKIZQWT6TQ6C5T1E8G&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
+    api_params_1 = "kioskToken=AV9A5OO31JFJ4JNPFSEG&userToken=JRAF00P3Y74813G0CJSMAWTGHU6P01OJQJ4F"
 
     # API cho kho hàng 2
     api_url_2 = "https://taphoammo.net/api/getStock"
-    api_params_2 = "kioskToken=YXRH1M4QFDT0IRYOSFSQ&userToken=VX642S9VPUYR308OTROAQOTEPEB2VEPNFUZL"
+    api_params_2 = "kioskToken=LN7V6R5LJN48IE2LHATF&userToken=JRAF00P3Y74813G0CJSMAWTGHU6P01OJQJ4F"
 
     telegram_bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
     telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
@@ -55,7 +55,7 @@ def main():
     stock_2 = data_2.get('stock', 'N/A')
 
     # Gửi dữ liệu về Telegram
-    message = f"{stock_2} - {stock_1}\nCòn {stock_2} tài khoản shop Gittechvn\nCòn {stock_1} tài khoản shop Shopgithubgiare"
+    message = f"{stock_2} - {stock_1}\nCòn {stock_2} tài khoản shop taiphattailoc88\nCòn {stock_1} tài khoản shop snsd1997"
     send_telegram_message(telegram_bot_token, telegram_chat_id, message)
 
     # Tạo GitHub release
